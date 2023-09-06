@@ -1,0 +1,122 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Registeration</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<style>
+		body {
+			font-family: 'Dancing Script', cursive;
+			background-color: rgb(192, 192, 192);
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container p-2 mt-5">
+		<form th:action="@{/registerUser}" th:object="${userData}" method="POST">
+			<div class="row p-2">
+				<div class="col-6 offset-3 p-3 ">
+					<div class="container mt-5 bg-light border border-5 border-dark">
+						<div class="row p-2 bg-secondary border border-5 border-dark">
+							<div class="col-6">
+								<h4 class="m-2 text-white"><b>Registeration Form</b></h4>
+							</div>
+							<div class="col-3 offset-3">
+								<a href="/login"
+									class="btn btn-md btn-primary border border-3 border-dark mt-1">Login</a>
+							</div>
+						</div>
+						<div class="row mt-5 mb-3">
+							<label for="name" class="form-label col-2 offset-1"><b>Name : </b></label>
+							<div class="col-5">
+								<input id="name" th:field="*{name}" class="form-control mb-3">
+							</div>
+							<div class="col-4">
+								<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">
+								</span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="email" class="form-label col-2 offset-1"><b>Email :</b></label>
+							<div class="col-5">
+								<input id="email" th:field="*{email}" class="form-control mb-3">
+							</div>
+							<div class="col-4">
+								<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">
+								</span>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="password" class="form-label col-2 offset-1"><b>Password:</b></label>
+							<div class="col-5">
+								<input id="password" type="password" th:field="*{password}" class="form-control mb-3">
+								<input type="checkbox" class="custom-control-input" id="customCheck"
+									onclick="myFunction()" />
+								<label class="custom-control-label" for="customCheck">Show Password</label>
+							</div>
+							<div class="col-4">
+								<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+									class="text-danger">
+								</span>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<label for="gender" class="form-label col-2 offset-1"><b>Gender :</b></label>
+							<div class="col-5">
+								<div class="row ms-1">
+									<div class="form-check col-6" th:each="option : ${options}">
+										<input th:class="${'form-check-input ' + option.active}" type="radio"
+											th:id="${'option_' + option.id}" th:name="selectedOption"
+											th:value="${option.name}" />
+										<label class="form-check-label col" th:for="${'option_' + option.id}"
+											th:text="${option.name}"></label>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<span th:if="${#fields.hasErrors('selectedOption')}" th:errors="*{selectedOption}"
+									class="text-danger">
+								</span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-6 offset-3 mt-3">
+								<p th:text="${msg}" class="text-success ms-3"></p>
+							</div>
+						</div>
+
+						<div class="row mb-2 bg-light">
+							<div class="col-4 offset-3">
+								<input type="submit" value="Register"
+									class="btn btn-success mb-4 ms-2 border border-4 border-dark">
+								<a href="/register" class="btn btn-danger mb-4 border border-4 border-dark">Clear</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("password");
+			if (x.type === "password") {
+				x.type = "text";
+			} else {
+				x.type = "password";
+			}
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
